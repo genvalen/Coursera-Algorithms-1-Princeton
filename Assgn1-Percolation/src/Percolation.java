@@ -1,23 +1,38 @@
-
+/**
+ * @author Mandeep Condle
+ *
+ * Coursera: Algorithms, Part 1
+ * Programming Assignment 1: Percolation
+ *
+ * Percolation.java
+ *
+ */
 
 public class Percolation {
 
-    public static final int CLOSED = 0;
-    public static final int OPEN   = 1;
+    private static final int CLOSED = 0;
+    private static final int OPEN   = 1;
 
 	private int[][] sites;
     private int N;
-    private UF uf;
+    private WeightedQuickUnionUF wqUF;
+    private int top;    //virtual top site
+    private int bot;    //virtual bottom site
+
 
     /**
      * Creates an N-by-N grid with all sites blocked
      * @param N grid side
      */
     public Percolation(int N) {
-        this.N = N+1;
-        this.uf = new UF(this.N * this.N);
+        this.N = N+2;
+        this.wqUF = new WeightedQuickUnionUF((this.N) * (this.N));
     	this.sites = new int[this.N][this.N];
 
+        this.top = this.N / 2;
+        this.bot = (this.N * this.N) - (this.N / 2);
+
+        //initialize all sites are closed
     	for (int i=1; i<this.N; i++) {
     		for (int j=0; j<this.N; j++) {
     			this.sites[i][j] = CLOSED;
@@ -31,10 +46,35 @@ public class Percolation {
      * @param j col
      */
     public void open(int i, int j) {
-    	if (i<1 || j<1 || i>this.N || j>this.N) throw new IndexOutOfBoundsException();
-        if (this.sites[i][j] == CLOSED) {
-    		this.sites[i][j] = OPEN;
-    	}
+    	this.validateInput(i, j);
+        int n = this.xyTo1D(i, j);
+
+        if (this.isInTopRow(i, j)) {
+            wqUF.union(top, n);
+        }
+
+        if (this.isInBottomRow(i, j)) {
+            wqUF.union(bot, n);
+        }
+
+        if (!this.isOpen(i, j)) {
+            this.sites[i][j] = OPEN;
+
+            //If neighbors are open then union them
+            if (this.isOpen(i, j+1)) {
+                wqUF.union(n, n+1);
+            }
+            if (this.isOpen(i, j-1)) {
+                wqUF.union(n, n-1);
+            }
+            if (this.isOpen(i+1, j)) {
+                wqUF.union(n, n+this.N);
+            }
+            if (this.isOpen(i-1, j)) {
+                wqUF.union(n, n-this.N);
+            }
+
+        }
     }
 
     /**
@@ -44,7 +84,7 @@ public class Percolation {
      * @return  T/F
      */
     public boolean isOpen(int i, int j) {
-        if (i<1 || j<1 || i>this.N || j>this.N) throw new IndexOutOfBoundsException();
+        this.validateInput(i, j);
 		return this.sites[i][j] == OPEN;
     }
 
@@ -55,15 +95,11 @@ public class Percolation {
      * @return  T/F
      */
     public boolean isFull(int i, int j) {
-        if (i<1 || j<1 || i>this.N || j>this.N) throw new IndexOutOfBoundsException();
+        this.validateInput(i, j);
 
-        //For (i,j) to be full, it should be open and connected to an open site on the first row
-        int n = (N-1)*i + j;
-
-        if (this.isOpen(i, j) && (uf.find(n) >= 1 && uf.find(n) <= this.N )) {
-            return true;
-        }
-        return false;
+        int n = this.xyTo1D(i, j);
+        if (wqUF.connected(top, n)) {   return true;    }
+        else                        {   return false;   }
     }
 
     /**
@@ -71,12 +107,46 @@ public class Percolation {
      * @return  T/F
      */
     public boolean percolates() {
-    	UF uf = new UF(this.N * this.N); //sample test for UF
-
-        uf.union(2, 5);
-
-    	return false;
+        if (wqUF.connected(bot, top)) { return true;    }
+        else {  return false;   }
     }
 
+    /**
+     * Checks if the 2D input is valid or not
+     * @param i row
+     * @param j col
+     * @return  true if input is valid, false if invalid
+     */
+    private boolean validateInput(int i, int j) {
+        if (i<0 || i>this.N) {
+            System.out.println("i: " + i);
+            throw new IndexOutOfBoundsException("row index i out of bounds");
+        }
+        if (j<0 || j>this.N) {
+            System.out.println("j: " + j);
+            throw new IndexOutOfBoundsException("col index j out of bounds");
+        }
+        return true;
+    }
+
+    /**
+     * Converts the 2D coordinates to 1D
+     * @param i row
+     * @param j col
+     * @return  1D coordinate for the wqUK data structure
+     */
+    private int xyTo1D(int i, int j) {
+        return (i * this.N) + j;
+    }
+
+    private boolean isInTopRow(int i, int j) {
+        if (i == 1) { return true;  }
+        return false;
+    }
+
+    private boolean isInBottomRow(int i, int j) {
+        if (i == this.N-2) {    return true;    }
+        return false;
+    }
 
 }

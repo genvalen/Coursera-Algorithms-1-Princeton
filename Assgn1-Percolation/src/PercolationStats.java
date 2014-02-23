@@ -1,7 +1,17 @@
-import java.io.BufferedInputStream;
-import java.util.Scanner;
+/**
+ * @author Mandeep Condle
+ *
+ * Coursera: Algorithms, Part 1
+ * Programming Assignment 1: Percolation
+ *
+ * PercolationStats.java
+ *
+ */
+
 
 public class PercolationStats {
+    private int T;
+    private double[] fractionOpened;
 
     /**
      * Perform T independent computational experiments on an N-by-N grid
@@ -11,7 +21,32 @@ public class PercolationStats {
     public PercolationStats(int N, int T) {
         if (N <= 0 || T <= 0) throw new IllegalArgumentException();
 
+        this.T = T;
+        this.fractionOpened = new double[T];
 
+        //run T experiments
+        for (int run=0; run<T; run++) {
+
+            //initialized for each run
+            Percolation perc = new Percolation(N);
+            int openLocal = 0;
+            double fracLocal;
+
+            while (!perc.percolates()) {
+
+                //generate uniform random numbers
+                int i = StdRandom.uniform(1, N+1);
+                int j = StdRandom.uniform(1, N+1);
+
+                if (!perc.isOpen(i, j)) {
+                    perc.open(i, j);
+                    openLocal++;    //CANT ADD THIS UNLESS IT ACTUALLY OPENS
+                }
+            }
+
+            fracLocal = (double) openLocal / (N*N);
+            this.fractionOpened[run] = fracLocal;
+        }
     }
 
     /**
@@ -19,8 +54,12 @@ public class PercolationStats {
      * @return  mean
      */
     public double mean() {
+        double sum = 0.0;
 
-        return 0.0;
+        for (int i=0; i<this.T; i++) {
+            sum += this.fractionOpened[i];
+        }
+        return sum / ((double) this.T);
     }
 
     /**
@@ -28,7 +67,13 @@ public class PercolationStats {
      * @return  SD
      */
     public double stddev() {
-        return 0.0;
+        double mu = this.mean();
+        double sum = 0.0;
+
+        for (int i=0; i<this.T; i++) {
+            sum += (this.fractionOpened[i] - mu) * (this.fractionOpened[i] - mu);
+        }
+        return sum / ((double) T - 1);
     }
 
     /**
@@ -36,7 +81,12 @@ public class PercolationStats {
      * @return lower bound
      */
     public double confidenceLo() {
-        return 0.0;
+        double cLow;
+        double mu = this.mean();
+        double sd = this.stddev();
+
+        cLow = mu - ((1.96*sd) / (Math.sqrt(T)));
+        return cLow;
     }
 
     /**
@@ -44,7 +94,12 @@ public class PercolationStats {
      * @return upper bound
      */
     public double confidenceHi() {
-        return 0.0;
+        double cHigh;
+        double mu = this.mean();
+        double sd = this.stddev();
+
+        cHigh = mu + ((1.96*sd) / (Math.sqrt(T)));
+        return cHigh;
     }
 
     /**
@@ -53,8 +108,7 @@ public class PercolationStats {
      */
     public static void main(String[] args) {
 
-        System.out.println();
-
+        //PercolationStats stats = new PercolationStats(800, 30);
 
     }
 
