@@ -8,27 +8,27 @@ lists, and to introduce you to generics and iterators.
 
 >
 
->     **public class Deque<Item> implements Iterable<Item> {**
+>     public class Deque<Item> implements Iterable<Item> {
 
->     **   public Deque()                           **// construct an empty deque
+>        public Deque()                           // construct an empty deque
 
->     **   public boolean isEmpty()                 **// is the deque empty?
+>        public boolean isEmpty()                 // is the deque empty?
 
->     **   public int size()                        **// return the number of items on the deque
+>        public int size()                        // return the number of items on the deque
 
->     **   public void addFirst(Item item)          **// insert the item at the front
+>        public void addFirst(Item item)          // insert the item at the front
 
->     **   public void addLast(Item item)           **// insert the item at the end
+>        public void addLast(Item item)           // insert the item at the end
 
->     **   public Item removeFirst()                **// delete and return the item at the front
+>        public Item removeFirst()                // delete and return the item at the front
 
->     **   public Item removeLast()                 **// delete and return the item at the end
+>        public Item removeLast()                 // delete and return the item at the end
 
->     **   public Iterator<Item> iterator()         **// return an iterator over items in order from front to end
+>        public Iterator<Item> iterator()         // return an iterator over items in order from front to end
 
->     **   public static void main(String[] args)   **// unit testing
+>        public static void main(String[] args)   // unit testing
 
->     **}**
+>     }
 
 >
 
@@ -49,25 +49,25 @@ time and use a constant amount of extra space per iterator.
 
 >
 
->     **public class RandomizedQueue<Item> implements Iterable<Item> {**
+>     public class RandomizedQueue<Item> implements Iterable<Item>
 
->     **   public RandomizedQueue()                 **// construct an empty randomized queue
+>        public RandomizedQueue()                 // construct an empty randomized queue
 
->     **   public boolean isEmpty()                 **// is the queue empty?
+>        public boolean isEmpty()                 // is the queue empty?
 
->     **   public int size()                        **// return the number of items on the queue
+>        public int size()                        // return the number of items on the queue
 
->     **   public void enqueue(Item item)           **// add the item
+>        public void enqueue(Item item)           // add the item
 
->     **   public Item dequeue()                    **// delete and return a random item
+>        public Item dequeue()                    // delete and return a random item
 
->     **   public Item sample()                     **// return (but do not delete) a random item
+>        public Item sample()                     // return (but do not delete) a random item
 
->     **   public Iterator<Item> iterator()         **// return an independent iterator over items in random order
+>        public Iterator<Item> iterator()         // return an independent iterator over items in random order
 
->     **   public static void main(String[] args)   **// unit testing
+>        public static void main(String[] args)   // unit testing
 
->     **}**
+>     }
 
 >
 
@@ -94,7 +94,7 @@ random order.
 
 >
 
->     % **echo A B C D E F G H I | java Subset 3**       % **echo AA BB BB BB BB BB CC CC | java Subset 8**
+>     % echo A B C D E F G H I | java Subset 3       % echo AA BB BB BB BB BB CC CC | java Subset 8
 
 >     C                                              BB
 
@@ -104,7 +104,7 @@ random order.
 
 >                                                    CC
 
->     % **echo A B C D E F G H I | java Subset 3**       BB
+>     % echo A B C D E F G H I | java Subset 3       BB
 
 >     E                                              BB
 
@@ -123,11 +123,11 @@ following API.
 
 >
 
->     **public class Subset {**
+>     public class Subset {
 
->     **   public static void main(String[] args)**
+>        public static void main(String[] args)
 
->     **}**
+>     }
 
 >
 
