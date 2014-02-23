@@ -4,6 +4,7 @@ Write a generic data type for a deque and a randomized queue. The goal of this a
 
 Dequeue. A double-ended queue or deque (pronounced "deck") is a generalization of a stack and a queue that supports inserting and removing items from either the front or the back of the data structure. Create a generic data type Deque that implements the following API:
 
+
 public class Deque<Item> implements Iterable<Item> {
    public Deque()                           // construct an empty deque
    public boolean isEmpty()                 // is the deque empty?
@@ -15,11 +16,14 @@ public class Deque<Item> implements Iterable<Item> {
    public Iterator<Item> iterator()         // return an iterator over items in order from front to end
    public static void main(String[] args)   // unit testing
 }
+
+
 Throw a NullPointerException if the client attempts to add a null item; throw a java.util.NoSuchElementException if the client attempts to remove an item from an empty deque; throw an UnsupportedOperationException if the client calls the remove() method in the iterator; throw a java.util.NoSuchElementException if the client calls the next() method in the iterator and there are no more items to return.
 
 Your deque implementation must support each deque operation in constant worst-case time and use space proportional to the number of items currently in the deque. Additionally, your iterator implementation must support the operations next() and hasNext() (plus construction) in constant worst-case time and use a constant amount of extra space per iterator.
 
 Randomized queue. A randomized queue is similar to a stack or queue, except that the item removed is chosen uniformly at random from items in the data structure. Create a generic data type RandomizedQueue that implements the following API:
+
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
    public RandomizedQueue()                 // construct an empty randomized queue
@@ -31,6 +35,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
    public Iterator<Item> iterator()         // return an independent iterator over items in random order
    public static void main(String[] args)   // unit testing
 }
+
 Throw a NullPointerException if the client attempts to add a null item; throw a java.util.NoSuchElementException if the client attempts to sample or dequeue an item from an empty randomized queue; throw an UnsupportedOperationException if the client calls the remove() method in the iterator; throw a java.util.NoSuchElementException if the client calls the next() method in the iterator and there are no more items to return.
 
 Your randomized queue implementation must support each randomized queue operation (besides creating an iterator) in constant amortized time and use space proportional to the number of items currently in the queue. That is, any sequence of M randomized queue operations (starting from an empty queue) should take at most cM steps in the worst case, for some constant c. Additionally, your iterator implementation must support construction in time linear in the number of items and it must support the operations next() and hasNext() in constant worst-case time; you may use a linear amount of extra memory per iterator. The order of two or more iterators to the same randomized queue should be mutually independent; each iterator must maintain its own random order.
