@@ -45,7 +45,11 @@ public class Deque<Item> implements Iterable<Item> {
      * and implements hasNext(), remove() and next()
      */
     private class DequeIterator implements Iterator<Item> {
-        private Node current = first;
+        private Node current;
+
+        public DequeIterator() {
+            this.current = first;
+        }
 
         public boolean hasNext() { return current != null;                      }
         public void remove()     { throw new UnsupportedOperationException();   }
@@ -96,14 +100,9 @@ public class Deque<Item> implements Iterable<Item> {
         if (this.isEmpty()) {
             this.first = new Node(item);
             this.last = first;
-//            this.first.next = this.last;
-//            //this.first.prev = null;   //redundant
-//            this.last.prev = this.first;
-//            //this.last.next = null;    //redundant
         } else {
             Node node = new Node(item);
             node.next = this.first;
-            //node.prev = null;         //redundant
             this.first.prev = node;
             this.first = node;
         }
@@ -120,15 +119,10 @@ public class Deque<Item> implements Iterable<Item> {
         if (this.isEmpty()) {
             this.last = new Node(item);
             this.first = last;
-//            this.first.next = this.last;
-//            //this.first.prev = null;   //redundant
-//            this.last.prev = this.first;
-//            //this.last.next = null;    //redundant
         } else {
             Node node = new Node(item);
             this.last.next = node;
             node.prev = this.last;
-            //node.next = null;         //redundant
             this.last = node;
         }
         this.numberOfItems++;
@@ -186,39 +180,17 @@ public class Deque<Item> implements Iterable<Item> {
         return new DequeIterator();
     }
 
-    //TEST
-    //TODO: Remove before submitting
-    public String toString() {
-        StringBuilder str = new StringBuilder();
-
-        Node node = this.first;
-        str.append("First -> ");
-        while (node != null) {
-            str.append(node.item + " ");
-            node = node.next;
-        }
-        str.append(" <- Last");
-
-        return str.toString().trim();
-    }
-
     /**
      * Unit testing
      * @param args
      */
     public static void main(String[] args) {
 
-        Deque<String> deq1 = new Deque<String>();
+        //Deque<String> deq1 = new Deque<String>();
         Deque<Integer> deq2 = new Deque<Integer>();
 
-        //System.out.println("deq1: " + deq1.toString());
         System.out.println("deq2: " + deq2.toString());
         System.out.println("size: " + deq2.size());
-
-//        deq1.addFirst("four");
-//        deq1.addFirst("five");
-//        deq1.addLast("two");
-//        deq1.addLast("one");
 
         deq2.addFirst(1);
         deq2.addFirst(2);
@@ -250,6 +222,17 @@ public class Deque<Item> implements Iterable<Item> {
         System.out.println("deq2: " + deq2.toString());
 
         System.out.println("size: " + deq2.size());
+
+
+
+        Iterator itr = deq2.iterator();
+
+        //System.out.println(itr.);
+        System.out.println(itr.next());
+        System.out.println(itr.next());
+        System.out.println(itr.next());
+        System.out.println(itr.next());
+        //System.out.println(itr.next());
 
     }
 
