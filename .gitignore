@@ -4,5 +4,5 @@ out/
 stdlib.jar
 algs4.jar
 Test/
-.class
-.zip
+*.class
+*.zip
