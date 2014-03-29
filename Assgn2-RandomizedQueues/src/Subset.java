@@ -23,7 +23,7 @@ public class Subset {
             rq.enqueue(str);
         }
 
-        for (int i=0; i<k; i++) {
+        for (int i = 0; i < k; i++) {
             System.out.println(rq.dequeue());
         }
 

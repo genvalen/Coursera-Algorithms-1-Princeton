@@ -29,9 +29,9 @@ public class Deque<Item> implements Iterable<Item> {
      * Has next and prev pointers to implement constant worst time operations
      */
     private class Node {
-        Item item;
-        Node next;
-        Node prev;
+        private Item item;
+        private Node next;
+        private Node prev;
 
         Node(Item item) {
             this.item = item;

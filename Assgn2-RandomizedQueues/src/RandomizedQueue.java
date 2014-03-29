@@ -18,7 +18,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     private int numberOfItems;
     private int max;
 
-    @SuppressWarnings("unchecked")
+    //@SuppressWarnings("unchecked")
     public RandomizedQueue() {
         this.numberOfItems = 0;
         this.max = RandomizedQueue.START_MAX;
@@ -26,7 +26,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     // Private iterator class
-    @SuppressWarnings("unchecked")
+    //@SuppressWarnings("unchecked")
     private class RandomizedQueueIterator implements Iterator<Item> {
         private Item[] itemIt;
         private int itemsLeft;
@@ -40,7 +40,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         //Helper method to generate array for iterator
         private void constructIterator() {
             int j = 0;
-            for (int i=0; i<max; i++) {
+            for (int i = 0; i < max; i++) {
                 if (j == numberOfItems) {   break;  }   //not sure if added check reqd
                 if (resizingArray[i] != null) {
                     this.itemIt[j++] = resizingArray[i];
@@ -128,13 +128,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @param newSize   new size
      * @return          new Item[]
      */
-    @SuppressWarnings("unchecked")
+    //@SuppressWarnings("unchecked")
     private Item[] createNewArray(int newSize) {
         Item[] newArray = (Item[]) new Object[newSize];
         int oldSize = this.resizingArray.length;
 
         int j = 0;
-        for (int i=0; i<oldSize; i++) {
+        for (int i = 0; i < oldSize; i++) {
             if (j == newSize) { break;  }
             if (this.resizingArray[i] != null) {
                 newArray[j++] = this.resizingArray[i];
@@ -201,7 +201,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         System.out.println(rq.dequeue());
         System.out.println(rq.dequeue());
 
-        //System.out.println(rq.toString());
+        //System.out.println(rq.to`String());
         System.out.println("items: " + rq.numberOfItems);
 
         Iterator it1 = rq.iterator();
@@ -214,6 +214,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         while (it2.hasNext()) {
             System.out.print(it2.next());
         }
+
+
+
+
+
+
 
 
 
