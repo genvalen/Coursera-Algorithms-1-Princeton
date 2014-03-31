@@ -15,21 +15,15 @@ public class Point {
         this.x = x;
         this.y = y;
 
-        SLOPE_ORDER = new SLOPE_ORDER(this);
+        SLOPE_ORDER = new SLOPE_ORDER();
     }
 
     // Private class implementing the comparator
-    private static class SLOPE_ORDER implements Comparator<Point> {
-        Point P;
-
-        public SLOPE_ORDER(Point P) {
-            this.P = P;
-        }
-
+    private final class SLOPE_ORDER implements Comparator<Point> {
         public int compare(Point A, Point B) {
-            if (P.slopeTo(A) < P.slopeTo(B)) {
+            if (Point.this.slopeTo(A) < Point.this.slopeTo(B)) {
                 return -1;
-            } else if (P.slopeTo(A) > P.slopeTo(B)) {
+            } else if (Point.this.slopeTo(A) > Point.this.slopeTo(B)) {
                 return 1;
             } else {
                 return 0;
@@ -72,14 +66,16 @@ public class Point {
 
     // Slope between this point and that point
     public double slopeTo(Point that) {
-        if (that.y == this.y) {         //horizontal line
-            return 0.0;
+        if (that == this) {         //horizontal line
+            return Double.POSITIVE_INFINITY;
         } else if (that.x == this.x) {  //vertical line
-            return Double.MAX_VALUE;
-        } else if (that == this) {      //slope of a point with  itself
-            return Double.MIN_VALUE;
+            return Double.POSITIVE_INFINITY;
+        } else if (that.y == this.y) {      //slope of a point with  itself
+            return 0.0;
         } else {
-            return ((that.y - this.y) / (that.x - this.x));
+            double num = that.y - this.y;
+            double den = that.x - this.x;
+            return num / den;
         }
     }
 }
