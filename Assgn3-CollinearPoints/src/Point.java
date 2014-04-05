@@ -5,7 +5,7 @@
 
 import java.util.Comparator;
 
-public class Point {
+public class Point implements Comparable<Point> {
     public final Comparator<Point> SLOPE_ORDER;
 
     private final int x;    //this is an immutable object
