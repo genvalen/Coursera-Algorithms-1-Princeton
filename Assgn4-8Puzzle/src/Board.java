@@ -58,8 +58,8 @@ public class Board {
                 //if (i == this.dim-1 && j == this.dim-1) {   break;  }
                 if (this.board[i][j] != Board.goalBoard[i][j] && this.board[i][j] != 0) {
 
-                    iExp = (this.board[i][j]-1) / 3;    //expected position of this block
-                    jExp = (this.board[i][j]-1) % 3;
+                    iExp = (this.board[i][j]-1) / this.dim;    //expected position of this block
+                    jExp = (this.board[i][j]-1) % this.dim;
 
                     manhattan += (Math.abs(iExp - i) + Math.abs(jExp - j));
                 }

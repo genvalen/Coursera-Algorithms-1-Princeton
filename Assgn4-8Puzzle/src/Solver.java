@@ -39,17 +39,22 @@ public class Solver {
     }
 
     // Calculates the solution to the initial board using the A* algorithm
+    // Adds possible options to the PQ and then chooses the one with minimum priority
     public Solver(Board initial) {
+        puzzleSolver(initial);
+    }
+
+    // Helper method that solves the puzzle
+    private void puzzleSolver(Board initial) {
         this.totalMoves = 0;
         this.initial = initial;
         this.previous = null;
         solutionList = new ArrayList<Board>();
         solverPQ = new MinPQ<Node>();
 
-        if (!this.isSolvable()) {
-            System.out.println("Unsolvable!!!");
-        } else {
+        if (!this.isSolvable()) {   System.out.println("Unsolvable!!!");    }
 
+        else {
             solverPQ.insert(new Node(this.initial, this.totalMoves));
             Node tempSol = solverPQ.delMin();
             this.solutionList.add(tempSol.nodeBoard);
@@ -77,13 +82,14 @@ public class Solver {
     // Checks if the initial board is solvable
     public boolean isSolvable() {
         //TODO: fix
+        // Will need to call the
         return true;
     }
 
     // Returns the min number of moves to solve the initial board
     // Returns -1 if no solution exists
     public int moves() {
-        return this.initial.hamming();
+        return this.initial.manhattan();
     }
 
     // Returns the sequence of boards in a shortest solution
@@ -93,7 +99,7 @@ public class Solver {
 
     public static void main(String[] args) {
 
-        int[][] test1 = new int[][] {{0, 1, 3}, {4, 2, 5}, {7, 8, 6}};
+        int[][] test1 = new int[][] {{1, 2, 3}, {4, 5, 6}, {8, 7, 0}};
         Board testBoard1 = new Board(test1);
 
 //        System.out.println(testBoard1.toString());
@@ -107,6 +113,8 @@ public class Solver {
 
 
         Solver testSolver1 = new Solver(testBoard1);
+
+        Solver testSolver2 = new Solver(testBoard1.twin());
 
         for (Board test: testSolver1.solutionList) {
             System.out.println(test.toString());
